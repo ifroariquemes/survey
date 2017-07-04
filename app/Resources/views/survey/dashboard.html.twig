@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <form>
+        {% for question in questions %}
+            <div>
+                {% if question.questionType != "SurveyBundle\\Entity\\QuestionDiscursive" %}
+                    <p><b>{{question.enunciation}}</b></p>
+                {% endif %}
+                {% for choice in question.choices %}
+                    <p>{{choice.html|raw}}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button class="btn btn-success" type="submit">Enviar</button>
+    </form>
+{% endblock %}
