@@ -5,10 +5,6 @@ namespace SurveyBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use SurveyBundle\View\VisualControl;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="survey_question_discursive")
- */
 class QuestionDiscursive extends QuestionAbstract {
 
     public function __construct() {
@@ -24,6 +20,11 @@ class QuestionDiscursive extends QuestionAbstract {
     public function setEnunciation($enunciation) {
         parent::setEnunciation($enunciation);
         $this->choices->get(0)->setLabel($enunciation);
+    }
+    
+    public function setRequired($required) {
+        parent::setRequired($required);
+        $this->choices->get(0)->setRequired($required);
     }
 
     public function getQuestionType() {

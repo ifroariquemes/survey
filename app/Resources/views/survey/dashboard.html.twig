@@ -1,17 +1,28 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    <form>
-        {% for question in questions %}
-            <div>
-                {% if question.questionType != "SurveyBundle\\Entity\\QuestionDiscursive" %}
-                    <p><b>{{question.enunciation}}</b></p>
-                {% endif %}
-                {% for choice in question.choices %}
-                    <p>{{choice.html|raw}}</p>
+    <h1>Enquetes <a href="{{path('survey_add')}}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Novo</a></h1>
+    {% if surveys.count > 0 %}
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th{% if surveys.isSorted('s.title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(surveys, 'Título', 's.title') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for survey in surveys %}
+                    <tr>
+                        <td>{{ survey.title }}</td>
+                    </tr>
                 {% endfor %}
-            </div>
-        {% endfor %}
-        <button class="btn btn-success" type="submit">Enviar</button>
-    </form>
+            </tbody>
+        </table>
+        <div class="navigation">
+            {{ knp_pagination_render(surveys) }}
+        </div>
+    {% else %}
+        <div class="alert alert-info">Nenhuma enquete cadastrada no momento, <a href="{{ path('survey_add') }}">crie uma agora</a>!</div>
+    {% endif %}
+
+
 {% endblock %}

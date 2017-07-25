@@ -10,6 +10,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/bootstrap-theme-cosmo/cosmo.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <script type="text/javascript" src="{{ asset('bower_components/jquery/dist/jquery.js') }}"></script>
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -49,7 +50,6 @@
             {% block content %}
             {% endblock %}
         </div>
-        <script type="text/javascript" src="{{ asset('bower_components/jquery/dist/jquery.js') }}"></script>
         <script type="text/javascript" src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         {% block javascripts %}
         {% endblock %}

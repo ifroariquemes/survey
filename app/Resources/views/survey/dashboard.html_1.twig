@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <form>
+        <ol>
+            {% for question in questions %}
+                <li>
+                    {% if question.questionType != "SurveyBundle\\Entity\\QuestionDiscursive" %}
+                        <p><b>{{question.enunciation}}</b></p>
+                    {% endif %}
+                    {{ question.choicesHTML|raw }}
+                </li>
+            {% endfor %}
+        </ol>
+        <button class="btn btn-success" type="submit">Enviar</button>
+    </form>
+    <script type="text/javascript">
+        jQuery(function ($) {
+            'use strict';
+            var form = $('form');
+            var requiredCheckboxes = $(':checkbox[required]');
+
+            //checkbox group validity
+            requiredCheckboxes.on('change', function (e) {
+                var checkboxGroup = requiredCheckboxes.filter('[name="' + $(this).attr('name') + '"]');
+                var isChecked = checkboxGroup.is(':checked');
+                checkboxGroup.each(function () {
+                    this.setCustomValidity(''); //remove all custom validity messages
+                });
+                checkboxGroup.prop('required', !isChecked);
+            });
+
+            //override form submission
+            form.find('[type="submit"]').on('click', function (e) {
+                var isValid = form[0].checkValidity();
+                if (false === isValid) {
+                    requiredCheckboxes.each(function () {
+                        if (false === this.checkValidity()) {
+                            //the checkbox is not valid, add a custom error message to it.
+                            this.setCustomValidity('Selecione uma das opções.');
+                            //optionally could use this.setCustomValidity($(this).attr('data-invalid'));
+                        }
+                    });
+                    //allow the browser's default submit event behavior 
+                    return true;
+                }
+            });
+        });
+    </script>
+{% endblock %}

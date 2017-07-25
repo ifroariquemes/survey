@@ -36,13 +36,31 @@ abstract class QuestionAbstract implements QuestionInterface {
 
     /**
      * Set of choices
+     * @ORM\Column(type="array")
      * @var ArrayCollection
      */
     protected $choices;
 
+    /**
+     * The question class name
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $questionType;
+    
+    /**
+     * The main survey
+     * @ORM\ManyToOne(targetEntity="SurveyBundle\Entity\Survey", inversedBy="questions")
+     * @ORM\JoinColumn(name="survey_id", referencedColumnName="id")
+     * @var Survey
+     */
+    protected $survey;
+    
+
     public function __construct() {
         $this->id = uniqid();
         $this->choices = new ArrayCollection();
+        $this->questionType = __CLASS__;
     }
 
     function getId() {
@@ -61,11 +79,6 @@ abstract class QuestionAbstract implements QuestionInterface {
         return $this->choices;
     }
 
-    function setId($id) {
-        $this->id = $id;
-        return $this;
-    }
-
     function setEnunciation($enunciation) {
         $this->enunciation = $enunciation;
         return $this;
@@ -74,6 +87,18 @@ abstract class QuestionAbstract implements QuestionInterface {
     function setRequired($required) {
         $this->required = $required;
         return $this;
+    }
+
+    function getChoicesHTML() {
+        $html = '';
+        foreach ($this->getChoices() as $choice) {
+            $html .= sprintf('<p>%s</p>', $choice->getHTML());
+        }
+        return $html;
+    }
+
+    function getQuestionType() {
+        return $this->questionType;
     }
 
 }

@@ -18,6 +18,7 @@ class AppKernel extends Kernel {
             new FR3D\LdapBundle\FR3DLdapBundle(),
             new IfroLdapBundle\IfroLdapBundle(),
             new SurveyBundle\SurveyBundle(),
+            new \Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -33,6 +33,12 @@ class FOSUser extends BaseUser implements LdapUserInterface {
      * @ORM\Column(type="string")
      */
     protected $dn;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="SurveyBundle\Entity\Survey", inversedBy="usersAnswered")
+     * @ORM\JoinTable(name="survey_users")
+     */
+    protected $surveysAnswered;
 
     public function __construct() {
         parent::__construct();
@@ -82,5 +88,16 @@ class FOSUser extends BaseUser implements LdapUserInterface {
     public function getDescription() {
         return $this->description;
     }
+    
+    function getSurveysAnswered() {
+        return $this->surveysAnswered;
+    }
+
+    function setSurveysAnswered($surveysAnswered) {
+        $this->surveysAnswered = $surveysAnswered;
+        return $this;
+    }
+
+
 
 }

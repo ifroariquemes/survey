@@ -91,3 +91,14 @@ fr3d_ldap:
             - { ldap_attr: physicaldeliveryofficename, user_method: setDescription }
             - { ldap_attr: samaccountname,  user_method: setUsername }
             - { ldap_attr: mail,  user_method: setEmail }
+            
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: id          # sort field query parameter name
+        sort_direction_name: desc # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig'     # sliding pagination controls template
+        sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig' # sort link template
